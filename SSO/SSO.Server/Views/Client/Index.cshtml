@@ -1,0 +1,58 @@
+﻿@model IEnumerable<SSO.Application.Client.Queries.GetClientList.ClientListItem>
+
+@{
+    ViewData["Title"] = "Clients";
+}
+
+@section scripts{
+    <script type="text/javascript" src="~/js/global.js"></script>
+}
+
+<div class="row">
+    <div class="col-12 mb-3">
+        <h2>Clients</h2>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12 mb-3">
+        <a asp-area="" asp-controller="Client" asp-action="Create" class="btn btn-outline-primary">Create</a>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12">
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>Id</th>
+                        <th>Name</th>
+                        <th>Enabled</th>
+                        <th>RequireConsent</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var client in Model)
+                    {
+                        <tr>
+                            <td><img src="@client.LogoUri" alt="@client.Name" width="50" /></td>
+                            <td>@client.Id</td>
+                            <td>@client.Name</td>
+                            <td>@client.Enabled</td>
+                            <td>@client.RequireConsent</td>
+                            <td class="text-right">
+                                <a asp-area="" asp-controller="Client" asp-action="Edit" asp-route-id="@client.Id" class="btn btn-outline-secondary">Edit</a>
+                                <a asp-area="" asp-controller="Client" asp-action="Delete" asp-route-id="@client.Id" data-remove="true" class="btn btn-outline-danger">Delete</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<partial name="_RemoveConfirmModal" />

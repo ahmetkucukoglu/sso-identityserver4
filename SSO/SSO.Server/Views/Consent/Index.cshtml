@@ -1,0 +1,80 @@
+﻿@model SSO.Application.Consent.Queries.GetConsentDetail.ConsentDetail
+
+<div>
+    <div class="row">
+        <div class="col-md">
+            @if (Model.ClientLogoUrl != null)
+            {
+                <div class="client-logo"><img src="images/@Model.ClientLogoUrl"></div>
+            }
+            <h1>
+                @Model.ClientName
+                <small>is requesting your permission</small>
+            </h1>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md">
+            <partial name="_ValidationSummary" />
+
+            <form asp-action="Index" method="post">
+                <input type="hidden" asp-for="ReturnUrl" />
+
+                <p class="text-left">Uncheck the permissions you do not wish to grant.</p>
+
+                @if (Model.IdentityScopes.Any())
+                {
+                    <div class="card">
+                        <h5 class="card-header">Personal Information</h5>
+                        <ul class="list-group list-group-flush">
+                            @foreach (var scope in Model.IdentityScopes)
+                            {
+                                <partial name="_ScopeListItem" model="scope" />
+                            }
+                        </ul>
+                    </div>
+                }
+
+                <br />
+
+                @if (Model.ResourceScopes.Any())
+                {
+                    <div class="card">
+                        <h5 class="card-header">Application Access</h5>
+                        <ul class="list-group list-group-flush">
+                            @foreach (var scope in Model.ResourceScopes)
+                            {
+                                <partial name="_ScopeListItem" model="scope" />
+                            }
+                        </ul>
+                    </div>
+                }
+
+                <br />
+
+                @if (Model.AllowRememberConsent)
+                {
+                    <div class="consent-remember">
+                        <label>
+                            <input class="consent-scopecheck" asp-for="RememberConsent" />
+                            <strong>Remember My Decision</strong>
+                        </label>
+                    </div>
+                }
+
+                <div class="consent-buttons">
+                    <button name="Action" value="yes" class="btn btn-success" autofocus>Yes, Allow</button>
+                    <button name="Action" value="no" class="btn btn-default">No, Do Not Allow</button>
+                    @if (Model.ClientUrl != null)
+                    {
+                        <a class="pull-right btn btn-default" target="_blank" href="@Model.ClientUrl">
+                            <span class="glyphicon glyphicon-info-sign"></span>
+                            <strong>@Model.ClientName</strong>
+                        </a>
+                    }
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

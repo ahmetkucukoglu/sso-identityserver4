@@ -1,0 +1,77 @@
+﻿@model IEnumerable<SSO.Application.Grant.Queries.GetGrantList.GrantListItem>
+
+<div class="grants">
+    <div class="row">
+        <div class="col-md">
+            <h1>
+                Client Application Access
+            </h1>
+            <div>Below is the list of applications you have given access to and the names of the resources they have access to.</div>
+        </div>
+    </div>
+
+    @if (Model.Any() == false)
+    {
+        <div class="row">
+            <div class="col-sm-8">
+                <div class="alert alert-info">
+                    You have not given access to any applications
+                </div>
+            </div>
+        </div>
+    }
+    else
+    {
+        foreach (var grant in Model)
+        {
+            <div class="row grant">
+                <div class="col-sm-2">
+                    @if (grant.ClientLogoUrl != null)
+                    {
+                        <img class="mx-auto d-block" src="@grant.ClientLogoUrl">
+                    }
+                </div>
+                <div class="col-sm-8">
+                    <p class="font-weight-bold">@grant.ClientName</p>
+                    <div>
+                        <p class="d-inline-block font-weight-bold">Created:</p>  @grant.Created.ToString("yyyy-MM-dd")
+                    </div>
+                    @if (grant.Expires.HasValue)
+                    {
+                        <div>
+                            <p class="d-inline-block font-weight-bold">Expires:</p>  @grant.Expires.Value.ToString("yyyy-MM-dd")
+                        </div>
+                    }
+                    @if (grant.IdentityGrantNames.Any())
+                    {
+                        <p class="font-weight-bold">Identity Grants</p>
+                        <ul>
+                            @foreach (var name in grant.IdentityGrantNames)
+                            {
+                                <li>@name</li>
+                            }
+                        </ul>
+                    }
+                    @if (grant.ApiGrantNames.Any())
+                    {
+                        <div>
+                            <p class="font-weight-bold">API Grants</p>
+                            <ul>
+                                @foreach (var name in grant.ApiGrantNames)
+                                {
+                                    <li>@name</li>
+                                }
+                            </ul>
+                        </div>
+                    }
+                </div>
+                <div class="col-sm-2">
+                    <form asp-action="Revoke">
+                        <input type="hidden" name="clientId" value="@grant.ClientId">
+                        <button class="btn btn-outline-danger">Revoke Access</button>
+                    </form>
+                </div>
+            </div>
+        }
+    }
+</div>

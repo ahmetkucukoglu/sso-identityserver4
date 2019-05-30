@@ -1,0 +1,54 @@
+﻿@model IEnumerable<SSO.Application.User.Queries.GetUserList.UserListItem>
+
+@{
+    ViewData["Title"] = "Users";
+}
+
+@section scripts{
+    <script type="text/javascript" src="~/js/global.js"></script>
+}
+
+<div class="row">
+    <div class="col-12 mb-3">
+        <h2>Users</h2>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12 mb-3">
+        <a asp-area="" asp-controller="User" asp-action="Create" class="btn btn-outline-primary">Create</a>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12">
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>UserName</th>
+                        <th>Email</th>
+                        <th>Roles</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var user in Model)
+                    {
+                    <tr>
+                        <td>@user.UserName</td>
+                        <td>@user.Email</td>
+                        <td>@user.Roles</td>
+                        <td class="text-right">
+                            <a asp-area="" asp-controller="User" asp-action="Edit" asp-route-id="@user.Id" class="btn btn-outline-secondary">Edit</a>
+                            <a asp-area="" asp-controller="User" asp-action="Delete" asp-route-id="@user.Id" data-remove="true" class="btn btn-outline-danger">Delete</a>
+                        </td>
+                    </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<partial name="_RemoveConfirmModal" />

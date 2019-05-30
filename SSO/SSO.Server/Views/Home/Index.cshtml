@@ -1,0 +1,50 @@
+﻿<div>
+    <div class="row">
+        <div class="col-sm-10">
+            <h1>
+                Welcome to SSO
+            </h1>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-8">
+            <p>
+                IdentityServer publishes a
+                <a href="~/.well-known/openid-configuration">discovery document</a>
+                where you can find metadata and links to all the endpoints, key material, etc.
+            </p>
+        </div>
+    </div>
+
+    @if (User.IsInRole("auth.admin"))
+    {
+        <div class="row">
+            <div class="col">
+                <ul class="nav">
+                    <li class="nav-item">
+                        <a asp-area="" asp-controller="Claim" class="nav-link">Claims</a>
+                    </li>
+                    <li class="nav-item">
+                        <a asp-area="" asp-controller="Role" class="nav-link">Roles</a>
+                    </li>
+                    <li class="nav-item">
+                        <a asp-area="" asp-controller="ApiResource" class="nav-link">Api Resources</a>
+                    </li>
+                    <li class="nav-item">
+                        <a asp-area="" asp-controller="IdentityResource" class="nav-link">Identity Resources</a>
+                    </li>
+                    <li class="nav-item">
+                        <a asp-area="" asp-controller="Client" class="nav-link">Clients</a>
+                    </li>
+                    <li class="nav-item">
+                        <a asp-area="" asp-controller="Grant" class="nav-link">Grants</a>
+                    </li>
+                    <li class="nav-item">
+                        <a asp-area="" asp-controller="User" class="nav-link">Users</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    }
+</div>

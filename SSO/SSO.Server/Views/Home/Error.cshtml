@@ -1,0 +1,35 @@
+﻿@model SSO.Application.Error.Queries.GetErrorDetail.ErrorDetail
+
+<div class="error-page">
+    <div class="page-header">
+        <h1>Error</h1>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-6">
+            
+            <div class="alert alert-danger">
+                Sorry, there was an error
+
+                @if (Model?.Message != null)
+                {
+                    <strong>
+                        <em>
+                            : @Model.Message
+                        </em>
+                    </strong>
+
+                    if (Model?.Description != null)
+                    {
+                        <div>@Model.Description</div>
+                    }
+                }
+            </div>
+
+            @if (Model?.RequestId != null)
+            {
+                <div class="request-id">Request Id: @Model.RequestId</div>
+            }
+        </div>
+    </div>
+</div>

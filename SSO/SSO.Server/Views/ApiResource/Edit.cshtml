@@ -1,0 +1,62 @@
+﻿@model SSO.Application.ApiResource.Queries.GetApiResourceEditViewModel.ApiResourceEditViewModel
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<div class="row justify-content-md-center">
+    <div class="col-sm-6">
+        <h1>Edit</h1>
+    </div>
+</div>
+
+<div class="row justify-content-md-center">
+    <div class="col-sm-6">
+        @await Html.PartialAsync("_ValidationSummary")
+    </div>
+</div>
+
+<div class="row justify-content-md-center">
+    <div class="col-sm-6">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+            </div>
+            <div class="panel-body">
+                <form asp-action="Edit">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <input type="hidden" asp-for="Command.Name" />
+                    <div class="form-group">
+                        <label asp-for="Command.DisplayName" class="font-weight-bold"></label>
+                        <input asp-for="Command.DisplayName" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Command.Description" class="font-weight-bold"></label>
+                        <input asp-for="Command.Description" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Command.SelectedClaims" class="font-weight-bold"></label>
+                        <br />
+                        @foreach (var item in Model.Claims)
+                        {
+                            <input type="checkbox" name="Command.SelectedClaims" value="@item" class="checkbox" @(Model.Command.SelectedClaims.Contains(item) ? "checked" : "") />
+                            @item
+                        }
+                    </div>
+                    <div class="form-group">
+                        <div class="checkbox font-weight-bold">
+                            <label>
+                                <input asp-for="Command.Enabled" /> @Html.DisplayNameFor(model => model.Command.Enabled)
+                            </label>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="form-group">
+                        <input type="submit" value="Save" class="btn btn-primary" />
+                    </div>
+                </form>
+
+                <a asp-area="" asp-controller="ApiResource" asp-action="Index">Back to list</a>
+            </div>
+        </div>
+    </div>
+</div>

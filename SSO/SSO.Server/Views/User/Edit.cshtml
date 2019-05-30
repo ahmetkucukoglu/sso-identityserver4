@@ -1,0 +1,102 @@
+﻿@model SSO.Application.User.Queries.GetUserEditViewModel.UserEditViewModel
+
+@section scripts{
+    <script type="text/javascript" src="~/js/user.js"></script>
+}
+
+<div class="row justify-content-md-center">
+    <div class="col-sm-6">
+        <h1>Edit</h1>
+    </div>
+</div>
+
+<div class="row justify-content-md-center">
+    <div class="col-sm-6">
+        @await Html.PartialAsync("_ValidationSummary")
+    </div>
+</div>
+
+<div class="row justify-content-md-center">
+    <div class="col-sm-6">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+            </div>
+            <div class="panel-body">
+
+                <ul class="nav nav-tabs" id="editTab" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link active" id="general-tab" data-toggle="tab" href="#general" role="tab" aria-controls="general" aria-selected="true">General</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="password-tab" data-toggle="tab" href="#password" role="tab" aria-controls="password" aria-selected="false">Password</a>
+                    </li>
+                </ul>
+                <div class="tab-content" id="editTabContent">
+                    <div class="tab-pane fade show active" id="general" role="tabpanel" aria-labelledby="general-tab">
+                        <br />
+                        <form asp-area="" asp-controller="User" asp-action="Edit" method="post">
+                            <input name="Command.Id" value="@Model.Command.Id" type="hidden" />
+                            <fieldset>
+                                <div class="form-group">
+                                    <label asp-for="Command.GivenName" class="font-weight-bold"></label>
+                                    <input class="form-control" placeholder="GivenName" asp-for="Command.GivenName" autofocus>
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="Command.FamilyName" class="font-weight-bold"></label>
+                                    <input class="form-control" placeholder="FamilyName" asp-for="Command.FamilyName">
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="Command.Email" class="font-weight-bold"></label>
+                                    <input class="form-control" placeholder="Email" asp-for="Command.Email">
+                                </div>
+                                <div class="form-group login-remember">
+                                    <label asp-for="Command.EmailVerified" class="font-weight-bold">
+                                        <input asp-for="Command.EmailVerified">
+                                        Email Verified
+                                    </label>
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="Command.UserName" class="font-weight-bold"></label>
+                                    <input class="form-control" placeholder="UserName" asp-for="Command.UserName">
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="Command.SelectedRoles" class="font-weight-bold"></label>
+                                    <br />
+                                    @foreach (var item in Model.Roles)
+                                    {
+                                        <input type="checkbox" name="Command.SelectedRoles" value="@item" class="checkbox" @(Model.Command.SelectedRoles.Contains(item) ? "checked" : "") />
+                                        @item
+                                    }
+                                </div>
+                                <div class="form-group">
+                                    <button class="btn btn-primary">Save</button>
+                                </div>
+                            </fieldset>
+                        </form>
+                    </div>
+                    <div class="tab-pane fade" id="password" role="tabpanel" aria-labelledby="password-tab">
+                        <br />
+                        <form asp-area="" asp-controller="User" asp-action="ChangePassword" method="post">
+                            <input name="Command.Id" value="@Model.Command.Id" type="hidden" />
+                            <fieldset>
+                                <div class="form-group">
+                                    <label asp-for="Command.OldPassword" class="font-weight-bold"></label>
+                                    <input class="form-control" type="password" placeholder="Password" asp-for="Command.OldPassword" autocomplete="off">
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="Command.Password" class="font-weight-bold"></label>
+                                    <input class="form-control" type="password" placeholder="Password" asp-for="Command.Password" autocomplete="off">
+                                </div>
+                                <div class="form-group">
+                                    <button class="btn btn-primary">Change Password</button>
+                                </div>
+                            </fieldset>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <a asp-area="" asp-controller="User" asp-action="Index">Back to list</a>
+        </div>
+    </div>
+</div>

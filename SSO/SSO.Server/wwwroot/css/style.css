@@ -1,0 +1,22 @@
+﻿.grant {
+    margin-top: 20px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid lightgray;
+}
+
+    .grant li {
+        list-style-type: none;
+        display: inline;
+    }
+
+        .grant li:after {
+            content: ', ';
+        }
+
+        .grant li:last-child:after {
+            content: '';
+        }
+
+.validation-summary-errors ul {
+    margin-bottom: 0;
+}

@@ -1,0 +1,183 @@
+﻿@model SSO.Application.Client.Queries.GetClientEditViewModel.ClientEditViewModel
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+@section scripts{
+    <script type="text/javascript" src="~/js/client.js"></script>
+}
+
+<div class="row justify-content-md-center">
+    <div class="col-sm-6">
+        <h1>Edit</h1>
+    </div>
+</div>
+
+<div class="row justify-content-md-center">
+    <div class="col-sm-6">
+        @await Html.PartialAsync("_ValidationSummary")
+    </div>
+</div>
+
+<div class="row justify-content-md-center">
+    <div class="col-sm-6">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+            </div>
+            <div class="panel-body">
+
+                <ul class="nav nav-tabs" id="editTab" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link active" id="general-tab" data-toggle="tab" href="#general" role="tab" aria-controls="general" aria-selected="true">General</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="uploadlogo-tab" data-toggle="tab" href="#uploadlogo" role="tab" aria-controls="uploadlogo" aria-selected="false">Logo</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="resecret-tab" data-toggle="tab" href="#resecret" role="tab" aria-controls="resecret" aria-selected="false">Secret</a>
+                    </li>
+                </ul>
+
+                <div class="tab-content" id="editTabContent">
+                    <div class="tab-pane fade show active" id="general" role="tabpanel" aria-labelledby="general-tab">
+                        <br />
+                        <form asp-action="Edit">
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                            <input type="hidden" asp-for="Command.Id" />
+                            <div class="form-group">
+                                <label asp-for="Command.Name" class="font-weight-bold"></label>
+                                <input asp-for="Command.Name" class="form-control" />
+                            </div>
+                            <div class="form-group">
+                                <div class="checkbox font-weight-bold">
+                                    <label>
+                                        <input asp-for="Command.Enabled" /> @Html.DisplayNameFor(model => model.Command.Enabled)
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Command.AllowedGrantTypes" class="font-weight-bold"></label>
+                                <select asp-for="Command.AllowedGrantTypes" class="form-control">
+                                    <option value="hybrid">hybrid</option>
+                                    <option value="password">password</option>
+                                    <option value="client_credentials">client_credentials</option>
+                                </select>
+                            </div>
+                            <div class="card">
+                                <div class="card-header">
+                                    <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                                        <label class="btn btn-secondary @(Model.Command.Type == 1 ? "active" : "")">
+                                            <input name="Command.Type" id="Command_Type" type="radio" value="1" autocomplete="off" @(Model.Command.Type == 1 ? "checked" : "")> UI
+                                        </label>
+                                        <label class="btn btn-secondary @(Model.Command.Type == 2 ? "active" : "")">
+                                            <input name="Command.Type" id="Command_Type" type="radio" value="2" autocomplete="off" @(Model.Command.Type == 2 ? "checked" : "")> API
+                                        </label>
+                                    </div>
+
+                                    <ul class="nav nav-tabs" id="typeTab" role="tablist" style="display:none">
+                                        <li class="nav-item">
+                                            <a class="nav-link" id="ui-tab" data-toggle="tab" href="#ui" role="tab" aria-controls="ui" aria-selected="false">UI</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" id="api-tab" data-toggle="tab" href="#api" role="tab" aria-controls="api" aria-selected="false">API</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="card-body">
+                                    <div class="tab-content">
+                                        <div class="tab-pane @(Model.Command.Type == 1 ? "active" : "")" id="ui" role="tabpanel" aria-labelledby="ui-tab">
+                                            <div class="form-group">
+                                                <label asp-for="Command.PostLogoutRedirectUri" class="font-weight-bold"></label>
+                                                <input asp-for="Command.PostLogoutRedirectUri" class="form-control" />
+                                            </div>
+                                            <div class="form-group">
+                                                <label asp-for="Command.RedirectUri" class="font-weight-bold"></label>
+                                                <input asp-for="Command.RedirectUri" class="form-control" />
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="checkbox font-weight-bold">
+                                                    <label>
+                                                        <input asp-for="Command.RequireConsent" /> @Html.DisplayNameFor(model => model.Command.RequireConsent)
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label asp-for="Command.SelectedIdentityResources" class="font-weight-bold"></label>
+                                                <br />
+                                                @foreach (var item in Model.IdentityResources)
+                                                {
+                                                    <input type="checkbox" name="Command.SelectedIdentityResources" value="@item" class='checkbox' @(Model.Command.SelectedIdentityResources.Contains(item) ? "checked" : "") />
+                                                    @item
+                                                }
+                                            </div>
+                                        </div>
+                                        <div class="tab-pane @(Model.Command.Type == 2 ? "active" : "")" id="api" role="tabpanel" aria-labelledby="api-tab">
+                                            <div class="form-group">
+                                                <label asp-for="Command.SelectedApiResources" class="font-weight-bold"></label>
+                                                <br />
+                                                @foreach (var item in Model.ApiResources)
+                                                {
+                                                    <input type="checkbox" name="Command.SelectedApiResources" value="@item" class='checkbox' @(Model.Command.SelectedApiResources.Contains(item) ? "checked" : "") />
+                                                    @item
+                                                }
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <br />
+                            <div class="form-group">
+                                <input type="submit" value="Save" class="btn btn-primary" />
+                            </div>
+                        </form>
+                    </div>
+                    <div class="tab-pane fade" id="uploadlogo" role="tabpanel" aria-labelledby="uploadlogo-tab">
+                        <br />
+                        <form asp-area="" asp-controller="Client" asp-action="UploadLogo" method="post" enctype="multipart/form-data">
+                            <input name="Command.Id" value="@Model.Command.Id" type="hidden" />
+                            <fieldset>
+                                <div class="form-group">
+                                    <label for="file" class="font-weight-bold">Logo</label>
+
+                                    <div class="custom-file">
+                                        <input asp-for="Command.LogoFile" type="file" class="custom-file-input">
+                                        <label class="custom-file-label" for="customFile">Choose logo</label>
+                                    </div>
+
+                                    <img id="logoPreview" src="@Model.Command.LogoUri" alt="logo" width="80" style="margin-top:10px;" class="img-thumbnail" />
+                                </div>
+
+                                <div class="form-group">
+                                    <button class="btn btn-primary">Save New Logo</button>
+                                </div>
+                            </fieldset>
+                        </form>
+                    </div>
+                    <div class="tab-pane fade" id="resecret" role="tabpanel" aria-labelledby="resecret-tab">
+                        <br />
+                        <form asp-area="" asp-controller="Client" asp-action="ReGenerateSecret" method="post">
+                            <input name="Command.Id" value="@Model.Command.Id" type="hidden" />
+                            <fieldset>
+                                <label asp-for="Command.NewSecret" class="font-weight-bold"></label>
+                                <div class="input-group mb-3">
+                                    <input asp-for="Command.NewSecret" class="form-control" value="@(Guid.NewGuid().ToString())" readonly />
+                                    <div class="input-group-append">
+                                        <button class="btn btn-outline-secondary" type="button" id="button-addon2" data-clipboard-target="#NewSecret">Copy</button>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <button class="btn btn-primary">Save New Secret</button>
+                                </div>
+                            </fieldset>
+                        </form>
+                    </div>
+                </div>
+
+                <a asp-area="" asp-controller="Client" asp-action="Index">Back to list</a>
+            </div>
+        </div>
+    </div>
+</div>
