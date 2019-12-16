@@ -15,7 +15,6 @@
     using MediatR;
     using MediatR.Pipeline;
     using Microsoft.AspNetCore.Builder;
-    using Microsoft.AspNetCore.DataProtection;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.HttpOverrides;
     using Microsoft.AspNetCore.Identity;
@@ -23,50 +22,29 @@
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
-    using Microsoft.Extensions.Logging;
-    using Serilog;
-    using Serilog.Events;
-    using Serilog.Sinks.Elasticsearch;
-    using System;
-    using System.IO;
+    using Microsoft.Extensions.Hosting;
     using System.Linq;
     using System.Reflection;
 
     public class Startup
     {
         public IConfiguration Configuration { get; }
-        public IHostingEnvironment HostingEnvironment { get; }
 
-        public Startup(IConfiguration configuration, IHostingEnvironment hostingEnvironment)
+        public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
-
-            var elasticUri = Configuration["Elastic:Uri"];
-
-            Log.Logger = new LoggerConfiguration()
-               .Enrich.FromLogContext()
-               .MinimumLevel.Verbose()
-               .MinimumLevel.Override("Microsoft", LogEventLevel.Warning)
-               .WriteTo.Elasticsearch(new ElasticsearchSinkOptions(new Uri(elasticUri))
-               {
-                   MinimumLogEventLevel = LogEventLevel.Information,
-                   AutoRegisterTemplate = true,
-               })
-               .CreateLogger();
-
-            HostingEnvironment = hostingEnvironment;
         }
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.Configure<GoogleCloudStorageSettings>(Configuration.GetSection("GoogleCloudStorage"));
+            services.Configure<AwsStorageSettings>(Configuration.GetSection("AwsStorage"));
 
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(RequestPreProcessorBehavior<,>));
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(RequestValidationBehavior<,>));
             services.AddScoped<IPasswordHasher<ApplicationUser>, ApplicationUserPasswordHasher>();
             services.AddTransient<IPersistedGrantStore, PersistedGrantStore>();
             services.AddTransient<IEmailService, EmailService>();
-            services.AddTransient<IStorageService, GoogleCloudStorage>();
+            services.AddTransient<IStorageService, AwsStorage>();
             services.AddScoped<IContentTypeProvider, FileExtensionContentTypeProvider>();
 
             services.AddMediatR(typeof(GetApiResourceListQuery).GetTypeInfo().Assembly);
@@ -95,29 +73,7 @@
                 options.RequireHeaderSymmetry = false;
             });
 
-            services.Configure<IISOptions>((options) =>
-            {
-                options.AuthenticationDisplayName = "Windows";
-                options.AutomaticAuthentication = false;
-            });
-
-            services.AddIdentityServer((options) =>
-            {
-                options.Events.RaiseErrorEvents = true;
-                options.Events.RaiseInformationEvents = true;
-                options.Events.RaiseFailureEvents = true;
-                options.Events.RaiseSuccessEvents = true;
-
-                options.IssuerUri = Configuration.GetValue<string>("IdentityServer:Url");
-            })
-            .AddClientStore<ClientStore>()
-            .AddResourceStore<ResourceStore>()
-            .AddAuth()
-            .AddCert();
-
-            //services.AddDataProtection()
-            //    .SetApplicationName("Auth")
-            //    .PersistKeysToFileSystem(new DirectoryInfo(Configuration.GetValue<string>("DataProtection:Path")));
+            services.AddIdentityServer4();
 
             services.AddCors((options) =>
             {
@@ -131,10 +87,10 @@
                             .Where((x) => !string.IsNullOrEmpty(x))
                             .ToArray();
 
-                        builder.WithOrigins(allowedOrigins).AllowAnyMethod();
+                        builder.WithOrigins(allowedOrigins).AllowAnyMethod().AllowAnyHeader();
                     });
             })
-            .AddMvc((options) =>
+            .AddControllersWithViews((options) =>
             {
                 options.Filters.Add(typeof(FriendlyExceptionHandlingActionFilter));
             })
@@ -144,10 +100,10 @@
             });
         }
 
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             app.UseForwardedHeaders();
-            
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -157,13 +113,21 @@
                 app.UseExceptionHandler("/Home/Error");
             }
 
-            loggerFactory.AddSerilog();
+            app.UseStaticFiles();
 
-            app.UseCors("AllowSpecificOrigin")
-                .UseHsts()
-                .UseStaticFiles()
-                .UseIdentityServer()
-                .UseMvcWithDefaultRoute();
+            app.UseRouting();
+            app.UseCors("AllowSpecificOrigin");
+            app.UseHsts();
+
+            app.UseIdentityServer();
+            app.UseAuthorization();
+
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllerRoute(
+                    name: "default",
+                    pattern: "{controller=Home}/{action=Index}/{id?}");
+            });
         }
     }
 }

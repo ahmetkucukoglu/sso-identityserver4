@@ -27,6 +27,7 @@
                 ClientSecret = request.Secret.ToSha256(),
                 PostLogoutRedirectUri = request.Type == 1 ? request.PostLogoutRedirectUri : null,
                 RedirectUri = request.Type == 1 ? request.RedirectUri : null,
+                AllowedCorsOrigin = request.Type == 1 ? request.AllowedCorsOrigin : null,
                 RequireConsent = request.Type == 1 ? request.RequireConsent : false,
                 AllowedGrantTypes = request.AllowedGrantTypes,
                 Enabled = request.Enabled

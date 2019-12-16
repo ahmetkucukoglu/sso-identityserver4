@@ -1,6 +1,6 @@
 ﻿namespace SSO.Application.Account.Commands.Logout
 {
-    using SSO.Domain.Entities;
+    using Domain.Entities;
     using IdentityServer4.Events;
     using IdentityServer4.Extensions;
     using IdentityServer4.Services;
@@ -35,21 +35,6 @@
 
             if (_httpContextAccessor.HttpContext.User?.Identity.IsAuthenticated == true)
             {
-                //var idp = _httpContextAccessor.HttpContext.User.FindFirst(JwtClaimTypes.IdentityProvider)?.Value;
-
-                //if (idp != null && idp != IdentityServer4.IdentityServerConstants.LocalIdentityProvider)
-                //{
-                //    var providerSupportsSignout = await _httpContextAccessor.HttpContext.GetSchemeSupportsSignOutAsync(idp);
-
-                //    if (providerSupportsSignout)
-                //    {
-                //        if (request.Id == null)
-                //        {
-                //            request.Id = await _interactionService.CreateLogoutContextAsync();
-                //        }
-                //    }
-                //}
-
                 await _signInManager.SignOutAsync();
 
                 await _eventService.RaiseAsync(new UserLogoutSuccessEvent(_httpContextAccessor.HttpContext.User.GetSubjectId(), _httpContextAccessor.HttpContext.User.GetDisplayName()));

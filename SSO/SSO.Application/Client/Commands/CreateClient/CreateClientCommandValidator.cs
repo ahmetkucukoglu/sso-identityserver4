@@ -14,6 +14,7 @@
             RuleFor(x => x.AllowedGrantTypes).NotEmpty();
             RuleFor(x => x.Type).NotEmpty();
             RuleFor(x => x.PostLogoutRedirectUri).NotEmpty().When(x => x.Type == 1);
+            RuleFor(x => x.AllowedCorsOrigin).NotEmpty().When(x => x.Type == 1);
             RuleFor(x => x.RedirectUri).NotEmpty().When(x => x.Type == 1);
             RuleFor(x => x.LogoFile).NotEmpty().SetValidator(new LogoValidator());
         }

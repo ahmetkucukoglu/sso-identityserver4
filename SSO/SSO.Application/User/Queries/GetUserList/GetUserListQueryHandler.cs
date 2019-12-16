@@ -1,6 +1,6 @@
 ﻿namespace SSO.Application.User.Queries.GetUserList
 {
-    using SSO.Domain.Entities;
+    using Domain.Entities;
     using MediatR;
     using Microsoft.AspNetCore.Identity;
     using System.Collections.Generic;

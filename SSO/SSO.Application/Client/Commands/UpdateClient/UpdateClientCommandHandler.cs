@@ -26,6 +26,7 @@
             client.Name = request.Name;
             client.PostLogoutRedirectUri = request.Type == 1 ? request.PostLogoutRedirectUri : null;
             client.RedirectUri = request.Type == 1 ? request.RedirectUri : null;
+            client.AllowedCorsOrigin = request.Type == 1 ? request.AllowedCorsOrigin : null;
             client.RequireConsent = request.Type == 1 ? request.RequireConsent : false;
             client.AllowedGrantTypes = request.AllowedGrantTypes;
             client.Enabled = request.Enabled;

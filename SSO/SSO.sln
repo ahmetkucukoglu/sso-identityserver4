@@ -1,15 +1,15 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.28307.645
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29519.87
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SSO.Infrastructure", "SSO.Infrastructure\SSO.Infrastructure.csproj", "{B98E9F4C-61BF-4CC0-A824-2E176588DB1C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SSO.Infrastructure", "SSO.Infrastructure\SSO.Infrastructure.csproj", "{B98E9F4C-61BF-4CC0-A824-2E176588DB1C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SSO.Domain", "SSO.Domain\SSO.Domain.csproj", "{AAA28B0F-F15A-4CED-9E88-C47AF298BF4F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SSO.Domain", "SSO.Domain\SSO.Domain.csproj", "{AAA28B0F-F15A-4CED-9E88-C47AF298BF4F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SSO.Application", "SSO.Application\SSO.Application.csproj", "{CADDE11E-F1BC-4EF4-8F7A-E565A3006E8E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SSO.Application", "SSO.Application\SSO.Application.csproj", "{CADDE11E-F1BC-4EF4-8F7A-E565A3006E8E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SSO.Server", "SSO.Server\SSO.Server.csproj", "{A1E96F35-81DE-4AB2-9017-1773DB81CDC4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SSO.Server", "SSO.Server\SSO.Server.csproj", "{A1E96F35-81DE-4AB2-9017-1773DB81CDC4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

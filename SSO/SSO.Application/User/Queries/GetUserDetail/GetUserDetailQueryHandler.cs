@@ -1,6 +1,6 @@
 ﻿namespace SSO.Application.User.Queries.GetUserDetail
 {
-    using SSO.Domain.Entities;
+    using Domain.Entities;
     using IdentityModel;
     using MediatR;
     using Microsoft.AspNetCore.Identity;

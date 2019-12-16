@@ -1,11 +1,10 @@
 ﻿namespace SSO.Application.User.Commands.UpdateUser
 {
-    using SSO.Application.Exceptions;
-    using SSO.Domain.Entities;
+    using Application.Exceptions;
+    using Domain.Entities;
     using IdentityModel;
     using MediatR;
     using Microsoft.AspNetCore.Identity;
-    using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading;

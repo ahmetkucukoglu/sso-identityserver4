@@ -3,15 +3,16 @@
     using IdentityServer4.Services;
     using MediatR;
     using Microsoft.AspNetCore.Hosting;
+    using Microsoft.Extensions.Hosting;
     using System.Threading;
     using System.Threading.Tasks;
 
     public class GetErrorDetailQueryHandler : IRequestHandler<GetErrorDetailQuery, ErrorDetail>
     {
         private readonly IIdentityServerInteractionService _interactionService;
-        private readonly IHostingEnvironment _hostingEnvironment;
+        private readonly IWebHostEnvironment _hostingEnvironment;
 
-        public GetErrorDetailQueryHandler(IIdentityServerInteractionService interactionService, IHostingEnvironment hostingEnvironment)
+        public GetErrorDetailQueryHandler(IIdentityServerInteractionService interactionService, IWebHostEnvironment hostingEnvironment)
         {
             _interactionService = interactionService;
             _hostingEnvironment = hostingEnvironment;

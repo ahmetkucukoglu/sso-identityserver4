@@ -19,6 +19,7 @@
         public string LogoUri { get; set; }
         public string RedirectUri { get; set; }
         public string PostLogoutRedirectUri { get; set; }
+        public string AllowedCorsOrigin { get; set; }
         public ICollection<ClientIdentityResource> IdentityResources { get; set; }
         public ICollection<ClientApiResource> ApiResources { get; set; }
     }

@@ -34,6 +34,7 @@
                 LogoUri = client.LogoUri,
                 PostLogoutRedirectUri = client.PostLogoutRedirectUri,
                 RedirectUri = client.RedirectUri,
+                AllowedCorsOrigin = client.AllowedCorsOrigin,
                 RequireConsent = client.RequireConsent,
                 AllowedGrantTypes = client.AllowedGrantTypes,
                 Enabled = client.Enabled,

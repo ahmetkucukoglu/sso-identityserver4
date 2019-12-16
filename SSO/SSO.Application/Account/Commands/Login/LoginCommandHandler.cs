@@ -1,6 +1,6 @@
 ﻿namespace SSO.Application.Account.Commands.Login
 {
-    using SSO.Application.Exceptions;
+    using Application.Exceptions;
     using Domain.Entities;
     using IdentityServer4.Events;
     using IdentityServer4.Models;

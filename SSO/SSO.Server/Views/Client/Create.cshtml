@@ -76,8 +76,7 @@
                     <div class="form-group">
                         <label asp-for="Command.AllowedGrantTypes" class="font-weight-bold"></label>
                         <select asp-for="Command.AllowedGrantTypes" class="form-control">
-                            <option value="hybrid">hybrid</option>
-                            <option value="password">password</option>
+                            <option value="implicit">implicit</option>
                             <option value="client_credentials">client_credentials</option>
                         </select>
                     </div>
@@ -103,6 +102,10 @@
                         <div class="card-body">
                             <div class="tab-content">
                                 <div class="tab-pane @(Model.Command.Type == 1 || Model.Command.Type == 0 ? "active" : "")" id="ui" role="tabpanel" aria-labelledby="ui-tab">
+                                    <div class="form-group">
+                                        <label asp-for="Command.AllowedCorsOrigin" class="font-weight-bold"></label>
+                                        <input asp-for="Command.AllowedCorsOrigin" class="form-control" />
+                                    </div>
                                     <div class="form-group">
                                         <label asp-for="Command.PostLogoutRedirectUri" class="font-weight-bold"></label>
                                         <input asp-for="Command.PostLogoutRedirectUri" class="form-control" />
