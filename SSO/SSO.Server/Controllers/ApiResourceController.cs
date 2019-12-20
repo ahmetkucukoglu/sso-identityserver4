@@ -13,7 +13,7 @@
     using System;
     using System.Threading.Tasks;
 
-    [Authorize(Roles = "auth.admin")]
+    [Authorize(Policy = "Admin")]
     public class ApiResourceController : Controller
     {
         private readonly IMediator _mediator;

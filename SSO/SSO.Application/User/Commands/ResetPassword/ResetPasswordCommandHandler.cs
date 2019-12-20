@@ -1,41 +1,22 @@
 ﻿namespace SSO.Application.User.Commands.ResetPassword
 {
-    using SSO.Infrastructure.Email;
-    using Domain.Entities;
-    using Exceptions;
+    using Application.Infrastructure.IdentityServer;
     using MediatR;
-    using Microsoft.AspNetCore.Http;
-    using Microsoft.AspNetCore.Identity;
     using System.Threading;
     using System.Threading.Tasks;
 
     public class ResetPasswordCommandHandler : IRequestHandler<ResetPasswordCommand, Unit>
     {
-        private readonly IEmailService _emailService;
-        private readonly IHttpContextAccessor _httpContextAccessor;
-        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly IIdentityUserService _identityUserService;
 
-        public ResetPasswordCommandHandler(
-            UserManager<ApplicationUser> userManager,
-            IHttpContextAccessor httpContextAccessor,
-            IEmailService emailService)
+        public ResetPasswordCommandHandler(IIdentityUserService identityUserService)
         {
-            _userManager = userManager;
-            _httpContextAccessor = httpContextAccessor;
-            _emailService = emailService;
+            _identityUserService = identityUserService;
         }
 
         public async Task<Unit> Handle(ResetPasswordCommand request, CancellationToken cancellationToken)
         {
-            var user = await _userManager.FindByEmailAsync(request.Email);
-
-            if (user == null)
-                throw new UserFriendlyException("Invalid email");
-
-            var result = await _userManager.ResetPasswordAsync(user, request.Token, request.NewPassword);
-
-            if (!result.Succeeded)
-                throw new UserFriendlyException("Invalid token");
+            await _identityUserService.ResetPassword(request);
 
             return Unit.Value;
         }

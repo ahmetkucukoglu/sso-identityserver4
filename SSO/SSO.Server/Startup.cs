@@ -46,23 +46,13 @@
             services.AddTransient<IEmailService, EmailService>();
             services.AddTransient<IStorageService, AwsStorage>();
             services.AddScoped<IContentTypeProvider, FileExtensionContentTypeProvider>();
-
+            
             services.AddMediatR(typeof(GetApiResourceListQuery).GetTypeInfo().Assembly);
 
             services.AddDbContext<AuthDbContext>((optionsBuilder) =>
             {
                 optionsBuilder.UseSqlServer(Configuration.GetConnectionString(nameof(AuthDbContext)));
             });
-
-            services.AddIdentity<ApplicationUser, IdentityRole>((options) =>
-            {
-                options.Password.RequireNonAlphanumeric = false;
-                options.Password.RequiredLength = 3;
-                options.Password.RequireLowercase = false;
-                options.Password.RequireUppercase = false;
-            })
-            .AddEntityFrameworkStores<AuthDbContext>()
-            .AddDefaultTokenProviders();
 
             services.Configure<ForwardedHeadersOptions>((options) =>
             {

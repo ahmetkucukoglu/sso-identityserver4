@@ -7,7 +7,7 @@
     using Microsoft.AspNetCore.Mvc;
     using System.Threading.Tasks;
 
-    [Authorize(Roles = "auth.admin")]
+    [Authorize(Policy = "Admin")]
     public class GrantController : Controller
     {
         private readonly IMediator _mediator;

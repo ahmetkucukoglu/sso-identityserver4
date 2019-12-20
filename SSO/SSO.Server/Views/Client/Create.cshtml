@@ -29,6 +29,7 @@
             <div class="panel-body">
                 <form asp-action="Create" enctype="multipart/form-data">
                     <input asp-for="Command.IdSuffix" type="hidden" />
+                    <input asp-for="Command.Type" type="hidden" />
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
                     <label asp-for="Command.Id" class="font-weight-bold"></label>
@@ -46,7 +47,7 @@
                         <label asp-for="Command.Name" class="font-weight-bold"></label>
                         <input asp-for="Command.Name" class="form-control" />
                     </div>
-                    
+
                     <div class="form-group">
                         <label for="file" class="font-weight-bold">Logo</label>
 
@@ -74,78 +75,60 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label asp-for="Command.AllowedGrantTypes" class="font-weight-bold"></label>
-                        <select asp-for="Command.AllowedGrantTypes" class="form-control">
-                            <option value="implicit">implicit</option>
-                            <option value="client_credentials">client_credentials</option>
-                        </select>
+                        <label asp-for="Command.SelectedIdentityResources" class="font-weight-bold"></label>
+                        <br />
+                        @foreach (var item in Model.IdentityResources)
+                        {
+                            <input type="checkbox" name="Command.SelectedIdentityResources" value="@item" class='checkbox' />
+                            @item
+                        }
                     </div>
-                    <div class="card">
-                        <div class="card-header">
-                            <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                                <label class="btn btn-secondary @(Model.Command.Type == 1 || Model.Command.Type == 0 ? "active" : "")">
-                                    <input name="Command.Type" id="Command_Type" type="radio" value="1" autocomplete="off" @(Model.Command.Type == 1 ? "checked" : "")> UI
-                                </label>
-                                <label class="btn btn-secondary @(Model.Command.Type == 2 ? "active" : "")">
-                                    <input name="Command.Type" id="Command_Type" type="radio" value="2" autocomplete="off" @(Model.Command.Type == 2 ? "checked" : "")> API
+                    <div class="form-group">
+                        <label asp-for="Command.SelectedApiResources" class="font-weight-bold"></label>
+                        <br />
+                        @foreach (var item in Model.ApiResources)
+                        {
+                            <input type="checkbox" name="Command.SelectedApiResources" value="@item" class='checkbox' />
+                            @item
+                        }
+                    </div>
+                    @if (Model.Command.Type == 1)
+                    {
+                        <div class="form-group">
+                            <label asp-for="Command.AllowedGrantTypes" class="font-weight-bold"></label>
+                            <select asp-for="Command.AllowedGrantTypes" class="form-control">
+                                <option value="implicit">implicit</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Command.AllowedCorsOrigin" class="font-weight-bold"></label>
+                            <input asp-for="Command.AllowedCorsOrigin" class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Command.PostLogoutRedirectUri" class="font-weight-bold"></label>
+                            <input asp-for="Command.PostLogoutRedirectUri" class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Command.RedirectUri" class="font-weight-bold"></label>
+                            <input asp-for="Command.RedirectUri" class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <div class="checkbox font-weight-bold">
+                                <label>
+                                    <input asp-for="Command.RequireConsent" /> @Html.DisplayNameFor(model => model.Command.RequireConsent)
                                 </label>
                             </div>
-                            <ul class="nav nav-tabs" id="typeTab" role="tablist" style="display:none">
-                                <li class="nav-item">
-                                    <a class="nav-link" id="ui-tab" data-toggle="tab" href="#ui" role="tab" aria-controls="ui" aria-selected="false">UI</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" id="api-tab" data-toggle="tab" href="#api" role="tab" aria-controls="api" aria-selected="false">API</a>
-                                </li>
-                            </ul>
                         </div>
-                        <div class="card-body">
-                            <div class="tab-content">
-                                <div class="tab-pane @(Model.Command.Type == 1 || Model.Command.Type == 0 ? "active" : "")" id="ui" role="tabpanel" aria-labelledby="ui-tab">
-                                    <div class="form-group">
-                                        <label asp-for="Command.AllowedCorsOrigin" class="font-weight-bold"></label>
-                                        <input asp-for="Command.AllowedCorsOrigin" class="form-control" />
-                                    </div>
-                                    <div class="form-group">
-                                        <label asp-for="Command.PostLogoutRedirectUri" class="font-weight-bold"></label>
-                                        <input asp-for="Command.PostLogoutRedirectUri" class="form-control" />
-                                    </div>
-                                    <div class="form-group">
-                                        <label asp-for="Command.RedirectUri" class="font-weight-bold"></label>
-                                        <input asp-for="Command.RedirectUri" class="form-control" />
-                                    </div>
-                                    <div class="form-group">
-                                        <div class="checkbox font-weight-bold">
-                                            <label>
-                                                <input asp-for="Command.RequireConsent" /> @Html.DisplayNameFor(model => model.Command.RequireConsent)
-                                            </label>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label asp-for="Command.SelectedIdentityResources" class="font-weight-bold"></label>
-                                        <br />
-                                        @foreach (var item in Model.IdentityResources)
-                                        {
-                                            <input type="checkbox" name="Command.SelectedIdentityResources" value="@item" class='checkbox' />
-                                            @item
-                                        }
-                                    </div>
-                                </div>
-                                <div class="tab-pane @(Model.Command.Type == 2 ? "active" : "")" id="api" role="tabpanel" aria-labelledby="api-tab">
-                                    <div class="form-group">
-                                        <label asp-for="Command.SelectedApiResources" class="font-weight-bold"></label>
-                                        <br />
-                                        @foreach (var item in Model.ApiResources)
-                                        {
-                                            <input type="checkbox" name="Command.SelectedApiResources" value="@item" class='checkbox' />
-                                            @item
-                                        }
-                                    </div>
-                                </div>
-                            </div>
+                    }
+                    else if (Model.Command.Type == 2)
+                    {
+                        <div class="form-group">
+                            <label asp-for="Command.AllowedGrantTypes" class="font-weight-bold"></label>
+                            <select asp-for="Command.AllowedGrantTypes" class="form-control">
+                                <option value="client_credentials">client_credentials</option>
+                            </select>
                         </div>
-                    </div>
-
+                    }
                     <br />
                     <div class="form-group">
                         <input type="submit" value="Create" class="btn btn-primary" />

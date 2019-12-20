@@ -1,30 +1,22 @@
 ﻿namespace SSO.Application.User.Commands.DeleteUser
 {
-    using Application.Exceptions;
-    using Domain.Entities;
     using MediatR;
-    using Microsoft.AspNetCore.Identity;
-    using System.Linq;
+    using Application.Infrastructure.IdentityServer;
     using System.Threading;
     using System.Threading.Tasks;
 
     public class DeleteUserCommandHandler : IRequestHandler<DeleteUserCommand, Unit>
     {
-        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly IIdentityUserService _identityUserService;
 
-        public DeleteUserCommandHandler(UserManager<ApplicationUser> userManager)
+        public DeleteUserCommandHandler(IIdentityUserService identityUserService)
         {
-            _userManager = userManager;
+            _identityUserService = identityUserService;
         }
 
         public async Task<Unit> Handle(DeleteUserCommand request, CancellationToken cancellationToken)
         {
-            var user = await _userManager.FindByIdAsync(request.Id);
-
-            var result = await _userManager.DeleteAsync(user);
-
-            if (!result.Succeeded)
-                throw new UserFriendlyException(result.Errors.Select((x) => $"{x.Code}:{x.Description}").ToList());
+            await _identityUserService.DeleteUser(request);
 
             return Unit.Value;
         }

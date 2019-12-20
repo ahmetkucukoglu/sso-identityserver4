@@ -15,7 +15,7 @@
     using System;
     using System.Threading.Tasks;
 
-    [Authorize(Roles = "auth.admin")]
+    [Authorize(Policy = "Admin")]
     public class ClientController : Controller
     {
         private readonly IMediator _mediator;
@@ -34,9 +34,10 @@
         }
 
         [HttpGet]
-        public async Task<IActionResult> Create()
+        public async Task<IActionResult> Create(int type)
         {
             var viewModel = await _mediator.Send(new ClientCreateViewModelQuery());
+            viewModel.Command.Type = type;
 
             return View(viewModel);
         }

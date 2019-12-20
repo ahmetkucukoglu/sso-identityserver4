@@ -33,20 +33,14 @@
                 Enabled = request.Enabled
             };
 
-            if (request.Type == 1)
+            foreach (var identityResource in request.SelectedIdentityResources)
             {
-                foreach (var identityResource in request.SelectedIdentityResources)
-                {
-                    client.IdentityResources.Add(new Domain.Entities.ClientIdentityResource { IdentityResourceId = identityResource });
-                }
+                client.IdentityResources.Add(new Domain.Entities.ClientIdentityResource { IdentityResourceId = identityResource });
             }
 
-            if (request.Type == 2)
+            foreach (var apiResource in request.SelectedApiResources)
             {
-                foreach (var apiResource in request.SelectedApiResources)
-                {
-                    client.ApiResources.Add(new Domain.Entities.ClientApiResource { ApiResourceId = apiResource });
-                }
+                client.ApiResources.Add(new Domain.Entities.ClientApiResource { ApiResourceId = apiResource });
             }
 
             await _authContext.Clients.AddAsync(client);

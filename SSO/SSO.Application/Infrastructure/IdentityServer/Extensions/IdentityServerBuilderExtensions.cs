@@ -1,10 +1,14 @@
 ﻿namespace SSO.Application.Infrastructure.IdentityServer.Extensions
 {
+    using Application.Infrastructure.IdentityServer;
+    using Application.Infrastructure.IdentityServer.Ldap;
+    using Application.User.Services.Ldap;
+    using Domain.Entities;
+    using Domain.EntityFramework;
     using IdentityModel;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
-    using SSO.Domain.Entities;
 
     public static class IdentityServerBuilderExtensions
     {
@@ -13,7 +17,29 @@
             var serviceProvider = builder.BuildServiceProvider();
             var configuration = serviceProvider.GetService<IConfiguration>();
 
-           
+            //builder.AddScoped<IIdentityUserService, LdapUserService>();
+            //builder.AddSingleton(new LdapUserStore(configuration.GetSection("Ldap").Get<LdapConfiguration>()));
+
+            builder.AddScoped<IIdentityUserService, IdentityUserService>();
+            
+            builder.AddAuthorization((options) =>
+            {
+                options.AddPolicy("Admin", (policy) =>
+                {
+                    policy.RequireRole("auth.admin"); //Medyanet - IT //auth.admin
+                });
+            });
+
+            builder.AddIdentity<ApplicationUser, IdentityRole>((options) =>
+            {
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequiredLength = 3;
+                options.Password.RequireLowercase = false;
+                options.Password.RequireUppercase = false;
+            })
+            .AddEntityFrameworkStores<AuthDbContext>()
+            .AddDefaultTokenProviders();
+
             builder.Configure<IdentityOptions>((options) =>
             {
                 options.ClaimsIdentity.UserIdClaimType = JwtClaimTypes.Subject;
@@ -33,8 +59,8 @@
             .AddClientStore<ClientStore>()
             .AddResourceStore<ResourceStore>()
             .AddAspNetIdentity<ApplicationUser>()
+            //.AddProfileService<LdapProfileService>()
             .AddDeveloperSigningCredential();
-
 
             return builder;
         }

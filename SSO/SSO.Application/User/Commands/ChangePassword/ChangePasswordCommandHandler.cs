@@ -1,30 +1,22 @@
 ﻿namespace SSO.Application.User.Commands.ChangePassword
 {
-    using Domain.Entities;
-    using Exceptions;
+    using Application.Infrastructure.IdentityServer;
     using MediatR;
-    using Microsoft.AspNetCore.Identity;
-    using System.Linq;
     using System.Threading;
     using System.Threading.Tasks;
 
     public class ChangePasswordCommandHandler : IRequestHandler<ChangePasswordCommand, Unit>
     {
-        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly IIdentityUserService _identityUserService;
 
-        public ChangePasswordCommandHandler(UserManager<ApplicationUser> userManager)
+        public ChangePasswordCommandHandler(IIdentityUserService identityUserService)
         {
-            _userManager = userManager;
+            _identityUserService = identityUserService;
         }
 
         public async Task<Unit> Handle(ChangePasswordCommand request, CancellationToken cancellationToken)
         {
-            var user = await _userManager.FindByIdAsync(request.Id);
-
-            var result = await _userManager.ChangePasswordAsync(user, request.OldPassword, request.Password);
-
-            if (!result.Succeeded)
-                throw new UserFriendlyException(result.Errors.Select((x) => $"{x.Code}:{x.Description}").ToList());
+            await _identityUserService.ChangePassword(request);
 
             return Unit.Value;
         }
