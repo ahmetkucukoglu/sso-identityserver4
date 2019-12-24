@@ -29,6 +29,7 @@
             client.AllowedCorsOrigin = request.Type == 1 ? request.AllowedCorsOrigin : null;
             client.RequireConsent = request.Type == 1 ? request.RequireConsent : false;
             client.AllowedGrantTypes = request.AllowedGrantTypes;
+            client.RequireClientSecret = request.RequireClientSecret;
             client.Enabled = request.Enabled;
 
             client.IdentityResources.Clear();

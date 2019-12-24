@@ -15,6 +15,7 @@
         public string Name { get; set; }
         public string AllowedGrantTypes { get; set; }
         public bool RequireConsent { get; set; }
+        public bool RequireClientSecret { get; set; }
         public string ClientSecret { get; set; }
         public string LogoUri { get; set; }
         public string RedirectUri { get; set; }

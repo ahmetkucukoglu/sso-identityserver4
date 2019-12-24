@@ -30,6 +30,7 @@
                 AllowedCorsOrigin = request.Type == 1 ? request.AllowedCorsOrigin : null,
                 RequireConsent = request.Type == 1 ? request.RequireConsent : false,
                 AllowedGrantTypes = request.AllowedGrantTypes,
+                RequireClientSecret = request.RequireClientSecret,
                 Enabled = request.Enabled
             };
 

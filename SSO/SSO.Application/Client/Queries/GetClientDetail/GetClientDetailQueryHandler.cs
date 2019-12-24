@@ -37,6 +37,7 @@
                 AllowedCorsOrigin = client.AllowedCorsOrigin,
                 RequireConsent = client.RequireConsent,
                 AllowedGrantTypes = client.AllowedGrantTypes,
+                RequireClientSecret = client.RequireClientSecret,
                 Enabled = client.Enabled,
                 SelectedApiResources = client.ApiResources.Select((x) => x.ApiResource.Name),
                 SelectedIdentityResources = client.IdentityResources.Select((x) => x.IdentityResource.Name)

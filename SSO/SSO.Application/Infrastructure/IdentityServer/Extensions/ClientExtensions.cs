@@ -31,7 +31,7 @@
                 RefreshTokenExpiration = IdentityServer4.Models.TokenExpiration.Sliding,
                 UpdateAccessTokenClaimsOnRefresh = true,
                 AllowOfflineAccess = true,
-                RequireClientSecret = client.AllowedGrantTypes != IdentityServer4.Models.GrantType.Implicit,
+                RequireClientSecret = client.RequireClientSecret,
                 AllowAccessTokensViaBrowser = client.AllowedGrantTypes == IdentityServer4.Models.GrantType.Implicit,
                 AllowedCorsOrigins = allowedCorsOrigins
             };

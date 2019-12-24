@@ -38,6 +38,7 @@
         public string AllowedCorsOrigin { get; set; }
         public bool RequireConsent { get; set; }
         public string AllowedGrantTypes { get; set; }
+        public bool RequireClientSecret { get; set; }
         public int Type { get; set; } = 1;
         public IEnumerable<string> SelectedApiResources { get; set; }
         public IEnumerable<string> SelectedIdentityResources { get; set; }

@@ -101,6 +101,13 @@
                             </select>
                         </div>
                         <div class="form-group">
+                            <div class="checkbox font-weight-bold">
+                                <label>
+                                    <input asp-for="Command.RequireClientSecret" /> @Html.DisplayNameFor(model => model.Command.RequireClientSecret)
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group">
                             <label asp-for="Command.AllowedCorsOrigin" class="font-weight-bold"></label>
                             <input asp-for="Command.AllowedCorsOrigin" class="form-control" />
                         </div>

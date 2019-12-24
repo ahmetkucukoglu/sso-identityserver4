@@ -21,6 +21,7 @@
         public string AllowedCorsOrigin { get; set; }
         public bool RequireConsent { get; set; }
         public string AllowedGrantTypes { get; set; }
+        public bool RequireClientSecret { get; set; }
         public int Type { get; set; }
         public string LogoUri { get; set; }
         public IFormFile LogoFile { get; set; }

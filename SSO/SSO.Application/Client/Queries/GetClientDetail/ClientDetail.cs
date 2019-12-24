@@ -22,6 +22,7 @@
         public string RedirectUri { get; set; }
         public string AllowedCorsOrigin { get; set; }
         public bool RequireConsent { get; set; }
+        public bool RequireClientSecret { get; set; }
         public string AllowedGrantTypes { get; set; }
         public int Type { get { return !string.IsNullOrEmpty(RedirectUri) ? 1 : 2; } }
         public IEnumerable<string> SelectedApiResources { get; set; }
@@ -41,6 +42,7 @@
                 RedirectUri = clientDetail.RedirectUri,
                 AllowedCorsOrigin = clientDetail.AllowedCorsOrigin,
                 RequireConsent = clientDetail.RequireConsent,
+                RequireClientSecret = clientDetail.RequireClientSecret,
                 Type = clientDetail.Type,
                 SelectedApiResources = clientDetail.SelectedApiResources,
                 SelectedIdentityResources = clientDetail.SelectedIdentityResources
