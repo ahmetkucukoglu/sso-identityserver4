@@ -15,6 +15,8 @@
                 Enabled = apiResource.Enabled
             };
 
+            resource.Scopes.FirstOrDefault().Required = true;
+
             return resource;
         }
     }

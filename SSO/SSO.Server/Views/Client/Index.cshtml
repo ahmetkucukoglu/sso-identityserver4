@@ -31,6 +31,7 @@
                         <th>Id</th>
                         <th>Name</th>
                         <th>Enabled</th>
+                        <th>App Type</th>
                         <th>RequireConsent</th>
                         <th></th>
                     </tr>
@@ -43,6 +44,7 @@
                             <td>@client.Id</td>
                             <td>@client.Name</td>
                             <td>@client.Enabled</td>
+                            <td>@client.AppType</td>
                             <td>@client.RequireConsent</td>
                             <td class="text-right">
                                 <a asp-area="" asp-controller="Client" asp-action="Edit" asp-route-id="@client.Id" class="btn btn-outline-secondary">Edit</a>

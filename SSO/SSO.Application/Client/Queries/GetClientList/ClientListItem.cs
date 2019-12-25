@@ -6,6 +6,7 @@
         public bool Enabled { get; set; }
         public string Name { get; set; }
         public bool RequireConsent { get; set; }
+        public string AppType { get; set; }
         public string LogoUri { get; set; }
     }
 }

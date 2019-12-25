@@ -1,6 +1,7 @@
 ﻿namespace SSO.Application.Client.Queries.GetClientList
 {
     using Domain.EntityFramework;
+    using IdentityServer4.Models;
     using MediatR;
     using System.Collections.Generic;
     using System.Linq;
@@ -26,6 +27,13 @@
                 Id = x.Id,
                 LogoUri = x.LogoUri,
                 Name = x.Name,
+                AppType = x.AllowedGrantTypes switch
+                {
+                    GrantType.Hybrid => "Server Side App",
+                    GrantType.Implicit => "Single Page App",
+                    GrantType.ClientCredentials => "API",
+                    _ => string.Empty
+                },
                 RequireConsent = x.RequireConsent
             });
 

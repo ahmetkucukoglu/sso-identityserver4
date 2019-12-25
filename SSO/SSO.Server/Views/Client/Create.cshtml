@@ -97,7 +97,8 @@
                         <div class="form-group">
                             <label asp-for="Command.AllowedGrantTypes" class="font-weight-bold"></label>
                             <select asp-for="Command.AllowedGrantTypes" class="form-control">
-                                <option value="implicit">implicit</option>
+                                <option value="implicit">implicit (Single Page App)</option>
+                                <option value="hybrid">hybrid (Server Side App)</option>
                             </select>
                         </div>
                         <div class="form-group">
@@ -132,7 +133,7 @@
                         <div class="form-group">
                             <label asp-for="Command.AllowedGrantTypes" class="font-weight-bold"></label>
                             <select asp-for="Command.AllowedGrantTypes" class="form-control">
-                                <option value="client_credentials">client_credentials</option>
+                                <option value="client_credentials">client_credentials (API)</option>
                             </select>
                         </div>
                     }
