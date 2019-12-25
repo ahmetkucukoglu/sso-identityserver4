@@ -17,16 +17,16 @@
             var serviceProvider = builder.BuildServiceProvider();
             var configuration = serviceProvider.GetService<IConfiguration>();
 
-            builder.AddScoped<IIdentityUserService, LdapUserService>();
-            builder.AddSingleton(new LdapUserStore(configuration.GetSection("Ldap").Get<LdapConfiguration>()));
+            //builder.AddScoped<IIdentityUserService, LdapUserService>();
+            //builder.AddSingleton(new LdapUserStore(configuration.GetSection("Ldap").Get<LdapConfiguration>()));
 
-            //builder.AddScoped<IIdentityUserService, IdentityUserService>();
+            builder.AddScoped<IIdentityUserService, IdentityUserService>();
             
             builder.AddAuthorization((options) =>
             {
                 options.AddPolicy("Admin", (policy) =>
                 {
-                    policy.RequireRole("Medyanet - IT"); //Medyanet - IT //auth.admin
+                    policy.RequireRole("auth.admin"); //Medyanet - IT //auth.admin
                 });
             });
 
@@ -59,7 +59,7 @@
             .AddClientStore<ClientStore>()
             .AddResourceStore<ResourceStore>()
             .AddAspNetIdentity<ApplicationUser>()
-            .AddProfileService<LdapProfileService>()
+            //.AddProfileService<LdapProfileService>()
             .AddDeveloperSigningCredential();
 
             return builder;
