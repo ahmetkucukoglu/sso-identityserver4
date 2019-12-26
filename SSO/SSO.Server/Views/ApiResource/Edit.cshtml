@@ -38,15 +38,16 @@
                         <br />
                         @foreach (var item in Model.Claims)
                         {
-                            <input type="checkbox" name="Command.SelectedClaims" value="@item" class="checkbox" @(Model.Command.SelectedClaims.Contains(item) ? "checked" : "") />
-                            @item
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" name="Command.SelectedClaims" class="custom-control-input" id="defaultInline1_@item" value="@item" @(Model.Command.SelectedClaims.Contains(item) ? "checked" : "")>
+                                <label class="custom-control-label" for="defaultInline1_@item">@item</label>
+                            </div>
                         }
                     </div>
                     <div class="form-group">
-                        <div class="checkbox font-weight-bold">
-                            <label>
-                                <input asp-for="Command.Enabled" /> @Html.DisplayNameFor(model => model.Command.Enabled)
-                            </label>
+                        <div class="custom-control custom-checkbox">
+                            <input type="checkbox" asp-for="Command.Enabled" class="custom-control-input" />
+                            <label asp-for="Command.Enabled" class="custom-control-label">Enabled</label>
                         </div>
                     </div>
                     <br />

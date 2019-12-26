@@ -39,10 +39,9 @@
                             <span class="input-group-text" id="basic-addon2">@Model.Command.IdSuffix</span>
                         </div>
                         <div class="input-group-append">
-                            <button class="btn btn-outline-secondary" type="button" id="btnCopyClientId">Copy</button>
+                            <button class="btn btn-md btn-outline-secondary m-0 px-3 py-2 z-depth-0 waves-effect" type="button" id="btnCopyClientId">Copy</button>
                         </div>
                     </div>
-
                     <div class="form-group">
                         <label asp-for="Command.Name" class="font-weight-bold"></label>
                         <input asp-for="Command.Name" class="form-control" />
@@ -63,15 +62,13 @@
                     <div class="input-group mb-3">
                         <input asp-for="Command.Secret" class="form-control" value="@(Guid.NewGuid().ToString())" readonly />
                         <div class="input-group-append">
-                            <button class="btn btn-outline-secondary" type="button" id="btnCopyClientSecret" data-clipboard-target="#Command_Secret">Copy</button>
+                            <button class="btn btn-md btn-outline-secondary m-0 px-3 py-2 z-depth-0 waves-effect" type="button" id="btnCopyClientSecret" data-clipboard-target="#Command_Secret">Copy</button>
                         </div>
                     </div>
-
                     <div class="form-group">
-                        <div class="checkbox font-weight-bold">
-                            <label>
-                                <input asp-for="Command.Enabled" /> @Html.DisplayNameFor(model => model.Command.Enabled)
-                            </label>
+                        <div class="custom-control custom-checkbox custom-control-inline">
+                            <input type="checkbox" asp-for="Command.Enabled" class="custom-control-input" />
+                            <label asp-for="Command.Enabled" class="custom-control-label">Enabled</label>
                         </div>
                     </div>
                     <div class="form-group">
@@ -79,8 +76,10 @@
                         <br />
                         @foreach (var item in Model.IdentityResources)
                         {
-                            <input type="checkbox" name="Command.SelectedIdentityResources" value="@item" class='checkbox' />
-                            @item
+                            <div class="custom-control custom-checkbox custom-control-inline">
+                                <input type="checkbox" name="Command.SelectedIdentityResources" class="custom-control-input" id="defaultInline1_@item" value="@item" @(Model.Command.SelectedIdentityResources.Contains(item) ? "checked" : "")>
+                                <label class="custom-control-label" for="defaultInline1_@item">@item</label>
+                            </div>
                         }
                     </div>
                     <div class="form-group">
@@ -88,8 +87,10 @@
                         <br />
                         @foreach (var item in Model.ApiResources)
                         {
-                            <input type="checkbox" name="Command.SelectedApiResources" value="@item" class='checkbox' />
-                            @item
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" name="Command.SelectedApiResources" class="custom-control-input" id="defaultUnchecked_@item" value="@item" @(Model.Command.SelectedApiResources.Contains(item) ? "checked" : "")>
+                                <label class="custom-control-label" for="defaultUnchecked_@item">@item</label>
+                            </div>
                         }
                     </div>
                     @if (Model.Command.Type == 1)
@@ -102,10 +103,9 @@
                             </select>
                         </div>
                         <div class="form-group">
-                            <div class="checkbox font-weight-bold">
-                                <label>
-                                    <input asp-for="Command.RequireClientSecret" /> @Html.DisplayNameFor(model => model.Command.RequireClientSecret)
-                                </label>
+                            <div class="custom-control custom-checkbox custom-control-inline">
+                                <input type="checkbox" asp-for="Command.RequireClientSecret" class="custom-control-input" />
+                                <label asp-for="Command.RequireClientSecret" class="custom-control-label">RequireClientSecret</label>
                             </div>
                         </div>
                         <div class="form-group">
@@ -121,10 +121,9 @@
                             <input asp-for="Command.RedirectUri" class="form-control" />
                         </div>
                         <div class="form-group">
-                            <div class="checkbox font-weight-bold">
-                                <label>
-                                    <input asp-for="Command.RequireConsent" /> @Html.DisplayNameFor(model => model.Command.RequireConsent)
-                                </label>
+                            <div class="custom-control custom-checkbox custom-control-inline">
+                                <input type="checkbox" asp-for="Command.RequireConsent" class="custom-control-input" />
+                                <label asp-for="Command.RequireConsent" class="custom-control-label">RequireConsent</label>
                             </div>
                         </div>
                     }

@@ -34,11 +34,11 @@
                             <label asp-for="Command.Email" class="font-weight-bold"></label>
                             <input class="form-control" placeholder="Email" asp-for="Command.Email">
                         </div>
-                        <div class="form-group login-remember">
-                            <label asp-for="Command.EmailVerified" class="font-weight-bold">
-                                <input asp-for="Command.EmailVerified">
-                                <strong>Email Verified</strong>
-                            </label>
+                        <div class="form-group">
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" asp-for="Command.EmailVerified" class="custom-control-input" />
+                                <label asp-for="Command.EmailVerified" class="custom-control-label">EmailVerified</label>
+                            </div>
                         </div>
                         <div class="form-group">
                             <label asp-for="Command.UserName" class="font-weight-bold"></label>
@@ -53,8 +53,10 @@
                             <br />
                             @foreach (var item in Model.Roles)
                             {
-                                <input type="checkbox" name="Command.SelectedRoles" value="@item" class='checkbox' @(Model.Command.SelectedRoles.Contains(item) ? "checked" : "") />
-                                @item
+                                <div class="custom-control custom-checkbox">
+                                    <input type="checkbox" name="Command.SelectedRoles" class="custom-control-input" id="defaultInline1_@item" value="@item" @(Model.Command.SelectedRoles.Contains(item) ? "checked" : "")>
+                                    <label class="custom-control-label" for="defaultInline1_@item">@item</label>
+                                </div>
                             }
                         </div>
                         <div class="form-group">
